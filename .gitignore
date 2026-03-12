@@ -1,3 +1,4 @@
 code-assistant
 features
 __pycache__
+.env

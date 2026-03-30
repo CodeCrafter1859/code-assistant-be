@@ -1,14 +1,14 @@
-from openai import OpenAI
+# from openai import OpenAI
 from dotenv import load_dotenv
 import google.generativeai as genai
 import os
 load_dotenv()
 
 
-OPEN_AI_API = os.getenv("OPEN_AI_API")
+# OPEN_AI_API = os.getenv("OPEN_AI_API")
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 model = genai.GenerativeModel("gemini-2.5-flash")
-client = OpenAI(api_key=OPEN_AI_API)
+# client = OpenAI(api_key=OPEN_AI_API)
 
 
 # def generate_code(prompt, language):

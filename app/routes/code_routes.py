@@ -1,6 +1,6 @@
 from fastapi import APIRouter
-from app.schemas.code_schema import CodeRequest
-from app.services.code_generation_service import generate_code
+from app.schemas.code_schema import CodeRequest, ExplainCode
+from app.services.code_generation_service import generate_code, explain_code
 
 router = APIRouter()
 
@@ -10,6 +10,17 @@ def generate_code_api(request: CodeRequest):
     code = generate_code(
         request.prompt,
         request.language
+    )
+
+    return {
+        "generated_code": code
+    }
+
+@router.post("/explain-code")
+def explain_code_simple_language(request: ExplainCode):
+
+    code = explain_code(
+        request.code,
     )
 
     return {

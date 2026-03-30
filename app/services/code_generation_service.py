@@ -45,3 +45,17 @@ def generate_code(prompt, language):
     response = model.generate_content(full_prompt)
 
     return response.text
+
+def explain_code(code):
+
+    full_prompt = f"""
+        You are an expert who can explain the code in effective way.
+        explain the below code
+        {code}
+        return step by step explaination.
+        """
+
+    response = model.generate_content(full_prompt)
+    print(response)
+
+    return response.text

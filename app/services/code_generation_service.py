@@ -1,13 +1,12 @@
 # from openai import OpenAI
-from dotenv import load_dotenv
 import google.generativeai as genai
-import os
-load_dotenv()
+from app.config import API_KEY, MODEL_NAME
+
 
 
 # OPEN_AI_API = os.getenv("OPEN_AI_API")
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-model = genai.GenerativeModel("gemini-2.5-flash")
+genai.configure(api_key=API_KEY)
+model = genai.GenerativeModel(MODEL_NAME)
 # client = OpenAI(api_key=OPEN_AI_API)
 
 

@@ -1,5 +1,5 @@
 from app.database import get_connection
-
+import bcrypt
 
 def register_user(first_name, last_name, email, password):
     conn = get_connection()
@@ -16,6 +16,8 @@ def register_user(first_name, last_name, email, password):
             "success": False,
             "message": "user already exists"
         }
+
+    hash_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
     
     query = """
     INSERT INTO users (first_name, last_name, email, password)
@@ -27,7 +29,7 @@ def register_user(first_name, last_name, email, password):
         first_name,
         last_name,
         email,
-        password
+        hash_password
     ))
 
     user_id = cur.fetchone()[0]
@@ -60,7 +62,7 @@ def login_user(email, password):
 
     
     _, stored_password = user
-    if password != stored_password:
+    if not bcrypt.checkpw(password.encode('utf-8'), stored_password.encode('utf-8')):
         return {"error": "Invalid password"}
 
     return {"message" : "login successful"}

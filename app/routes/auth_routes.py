@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
-from app.schemas.user_schema import SignUp, SignIn
-from app.services.user_auth_service import register_user, login_user
+from app.schemas.user_schema import SignUp, SignIn, VerifyOTPRequest
+from app.services.user_auth_service import register_user, login_user, verify_otp_service
 
 auth_router = APIRouter()
 
@@ -16,7 +16,7 @@ def create_user(request: SignUp):
     )
 
     if not result["success"]:
-        raise HTTPException(status_code=400, message=result["message"])
+        raise HTTPException(status_code=400, detail=result["message"])
 
     return {
         "message": "User created successfully",
@@ -31,4 +31,10 @@ def signin_user(request: SignIn):
         request.password
 
     )
+    return message
+
+
+@auth_router.post('/verify-otp')
+def verify_otp(request: VerifyOTPRequest):
+    message = verify_otp_service(request.email, request.otp)
     return message

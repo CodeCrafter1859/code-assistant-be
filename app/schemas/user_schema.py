@@ -9,3 +9,7 @@ class SignUp(BaseModel):
 class SignIn(BaseModel):
     email: str
     password: str
+
+class VerifyOTPRequest(BaseModel):
+    email: str
+    otp: str

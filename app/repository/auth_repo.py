@@ -45,7 +45,7 @@ def get_user_credentials_by_email(email):
     cur = conn.cursor()
 
     query = """
-    SELECT email, password
+    SELECT id, password
     FROM users
     WHERE email = %s;
     """

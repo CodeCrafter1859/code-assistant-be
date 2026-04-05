@@ -4,6 +4,8 @@ from app.repository.auth_repo import (
     get_user_credentials_by_email,
     get_user_id_by_email,
 )
+from app.utils.jwrt_handler import create_access_token
+
 
 def register_user(first_name, last_name, email, password):
     existing_user = get_user_id_by_email(email)
@@ -25,12 +27,19 @@ def register_user(first_name, last_name, email, password):
 
 def login_user(email, password):
     user = get_user_credentials_by_email(email)
+
     if not user:
         return {"error": "user not found"}
 
     
-    _, stored_password = user
+    id, stored_password = user
     if not bcrypt.checkpw(password.encode('utf-8'), stored_password.encode('utf-8')):
         return {"error": "Invalid password"}
 
-    return {"message" : "login successful"}
+    access_token = create_access_token({"id": id, "email": email})
+
+    return {
+        "success": True,
+        "access_token": access_token,
+        "token_type": "bearer"
+    }
